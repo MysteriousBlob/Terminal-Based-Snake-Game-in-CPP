@@ -3,9 +3,13 @@
 # Inspiration for this was https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP
 
 To move use WASD: (This is not permanent)
+
 W: Up
+
 A: Right
+
 S: Down
+
 D: Right
 
 
