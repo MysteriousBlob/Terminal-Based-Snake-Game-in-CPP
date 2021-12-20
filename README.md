@@ -12,6 +12,7 @@ S: Down
 
 D: Right
 
+#
 
 The goal of the game is to fill all the tiles possible with your snake or
 casually collect the fruits (They look like 'P') to score points,
