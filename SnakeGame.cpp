@@ -27,12 +27,12 @@ std::ostream &SnakeGame::draw(std::ostream &os) const
     std::system("cls"); // Clear terminal
     if(gameOver)
     {
-        os << "You lost\nYour score: " << snake.tailSize;
+        os << "You lost\nYour score: " << snake.tailSize << "\n";
         return os;
     }
     else if(gameWon)
     {
-        os << "YOU WON!\nWell Played!";
+        os << "YOU WON!\nWell Played!\n";
         return os;
     }
 
