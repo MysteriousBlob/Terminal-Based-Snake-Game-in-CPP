@@ -27,12 +27,12 @@ std::ostream &SnakeGame::draw(std::ostream &os) const
     std::system("cls"); // Clear terminal
     if(gameOver)
     {
-        os << "You lost\nYour score: " << snake.tailSize << "\n";
+        os << "You lost\nYour score: " << snake.tailSize << "\n\nPress any key to continue...";
         return os;
     }
     else if(gameWon)
     {
-        os << "YOU WON!\nWell Played!\n";
+        os << "YOU WON!\nWell Played!\n\nPress any key to continue...";
         return os;
     }
 
@@ -101,6 +101,8 @@ std::ostream &SnakeGame::draw(std::ostream &os) const
         os << "# ";
     }
     os << "#\n";
+
+    os << "Press w/a/s/d to move: "; // Moving keys hint
 
     return os;
 }
@@ -189,7 +191,6 @@ void SnakeGame::logic()
 
 void SnakeGame::input() // Get input
 {
-    std::cout << "WASD: "; // Display key helper
     char input = getch(); // Get input
     switch (input) // Assign the corresponding direction to the snake
     {
@@ -210,7 +211,6 @@ void SnakeGame::input() // Get input
         snake.direction = Direction::Right;
         break;
     default:
-        snake.direction = Direction::Unkown;
         break;
     }
 }

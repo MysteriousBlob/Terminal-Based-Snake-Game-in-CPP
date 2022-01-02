@@ -2,6 +2,7 @@
 #define __SNAKEGAME_H__
 #include <iostream> // Used for I/O interface
 #include <conio.h> // Used for getch function
+#include <chrono> // Used for interval/Seed generation
 
 class SnakeGame 
 { // Game class
@@ -45,9 +46,10 @@ public: // Methods/Constructor/Destructor
     void logic();
     void operator()(); // logic operator
 
-    void input(); 
+    void input();
     void operator()(char); // input operator
 public: //Attributes
+    const constexpr static std::chrono::milliseconds interval {300}; // Moving interval
     const constexpr static Vector2 &dimensions {_dimensions}; // dimensions of the game
     bool gameOver;
     bool gameWon;
