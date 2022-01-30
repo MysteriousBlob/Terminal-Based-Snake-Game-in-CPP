@@ -36,10 +36,18 @@ int main() {
         }
     };
 
+    bool pending = true;
     while(!game.gameOver && !game.gameWon)
+    {
         game(char()); // Get input
+        if(game.gameOver || game.gameWon)
+            pending = false;
+    }
 
     update.join(); // Wait for the last update
+
+    if(pending)
+        getch();
 
     system("cls"); // Resets the terminal
     return 0;

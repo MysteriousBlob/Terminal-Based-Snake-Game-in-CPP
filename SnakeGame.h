@@ -49,7 +49,7 @@ public: // Methods/Constructor/Destructor
     void input();
     void operator()(char); // input operator
 public: //Attributes
-    const constexpr static std::chrono::milliseconds interval {300}; // Moving interval
+    const constexpr static std::chrono::milliseconds interval {600}; // Moving interval
     const constexpr static Vector2 &dimensions {_dimensions}; // dimensions of the game
     bool gameOver;
     bool gameWon;
