@@ -1,16 +1,16 @@
 # Terminal Based Snake Game
 
-# Inspiration for this was https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP
+# <a href = https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP> Inspiration </a>
 
 To move use WASD: (This is not permanent)
 
-W: Up
-
-A: Right
-
-S: Down
-
-D: Right
+|Key|Direction|
+|---|---------|
+| W |   Up    |
+| A |  Left   |
+| S |  Down   |
+| D |  Right  |
+<br>
 
 #
 
@@ -24,6 +24,8 @@ so if you touch yourself or the walls it's game over!
 
 #
 
-That is my first ever project on GitHub and I hope you like it!
+### **_That is my first ever project on GitHub and I hope you like it!_**
 
-Thank you very much! <3
+<br>
+
+### **_Thank you very much! <3_**

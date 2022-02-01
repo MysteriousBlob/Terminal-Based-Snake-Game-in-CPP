@@ -15,6 +15,8 @@
 int main() {
     srand(time(nullptr)); // Set a new seed based on the system's clock
 
+    system("cls");
+    replay:
     SnakeGame game;
     while(!game.gameOver && !game.gameWon)
     {
@@ -22,8 +24,12 @@ int main() {
         game(char()); // Get input
         game(); // Logic
     }
-    std::cout << game << "\nPress any key to continue... "; // Display last time either a loss or a win
-    getch(); // Prevent the terminal from going "bye bye"
+    std::cout << game << "\nDo you want to play again? (Y/Any key) "; // Display last time either a loss or a win
+    char choice = getch(); // Get user's choice;
+
+    if(choice == 'y' || choice == 'Y')
+        goto replay;
+
     system("cls"); // Resets the terminal
     return 0;
 }
