@@ -1,6 +1,6 @@
 # Terminal Based Snake Game
 
-# Inspiration for this was https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP
+# <a href = https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP> Inspiration </a>
 
 To move use WASD: (This is not permanent)
 
