@@ -1,8 +1,4 @@
 #include "SnakeGame.h"
-std::ostream &operator<<(std::ostream &os, const SnakeGame &SG)
-{
-    return SG.draw(os);
-}
 void SnakeGame::operator()()
 {
     logic();
@@ -22,18 +18,26 @@ SnakeGame::SnakeGame() // Constructs a SnakeGame obj
     } while(fruit.fruitPos == snake.head);
 }
 
-std::ostream &SnakeGame::draw(std::ostream &os) const
+void SnakeGame::draw(const HANDLE &console) const
 {
-    std::system("cls"); // Clear terminal
+    CONSOLE_SCREEN_BUFFER_INFO buf;
+    GetConsoleScreenBufferInfo(console, &buf); // Save the buffer info in a var named buf
+
+    WriteConsoleOutputCharacter(console, TEXT(""), buf.dwSize.X * buf.dwSize.Y, {0,0}, NULL); // Clear terminal
+
+    char screen[buf.dwSize.X * buf.dwSize.Y + 1]; // Declare a string that will represent the screen
+    unsigned index {0}; // Indexing for the screen
+
     if(gameOver)
     {
-        os << "You lost\nYour score: " << snake.tailSize << "\n\nPress any key to continue...";
-        return os;
+        std::cout << "You lost\nYour score: " << snake.tailSize << "\n\nPress any key to continue...";
+        return;
     }
+
     else if(gameWon)
     {
-        os << "YOU WON!\nWell Played!\n\nPress any key to continue...";
-        return os;
+        std::cout << "YOU WON!\nWell Played!\n\nPress any key to continue...";
+        return;
     }
 
 /* [Sample output]
@@ -47,28 +51,30 @@ std::ostream &SnakeGame::draw(std::ostream &os) const
     # # # # # # #
 */
 
-    os << "score: " << snake.tailSize << std::endl; // Score at the top
+    std::cout << "score: " << snake.tailSize; // Score at the top
 
-    os << "# ";  // The top line
-    for (int x = 0; x < _dimensions.x; x++) {
-        os << "# ";
+    screen[index++] = '#'; screen[index++] = ' '; //Top line start
+
+    for (int x = 0; x < _dimensions.x; x++)
+    {
+        screen[index++] = '#'; 
+        screen[index++] = ' ';
     }
-    os << "#\n";
-    
+
+    screen[index++] = '#'; screen[index++] = '\n'; //Top line end
+
+
     for (int y = 0; y < _dimensions.y; y++) // Loop through Y positions
     {
-        os << "# "; // First line
+        screen[index++] = '#'; screen[index++] = ' '; // Left line
+        
         for (int x = 0; x < _dimensions.x; x++) // Loop through X positions
-        { 
+        {
             if(snake.head.x == x && snake.head.y == y) // Output the snake's head
-            {
-                os << "O";
-            }
+                screen[index++] = 'O';
             
             else if(fruit.fruitPos.x == x && fruit.fruitPos.y == y) // Output the fruit
-            {
-                os << "P";
-            }
+                screen[index++] = 'P';
 
             else if(snake.tailSize != 0) 
             { // Removes the unnecessary allocation
@@ -77,34 +83,36 @@ std::ostream &SnakeGame::draw(std::ostream &os) const
                 { // Loop through the tails
                     if(snake.tail[i].x == x && snake.tail[i].y == y)
                     { // Output the tail
-                        os << "o";
+                        screen[index++] = 'o';
                         foundTail = true;
                         break;
                     }
                 }
                 if(!foundTail) // If no tail was found
-                    os << " ";
+                    screen[index++] = ' ';
             }
-
             else //If there's no tail yet
-            {
-                os << " ";
-            }
+                screen[index++] = ' ';
 
-            os << " "; // Spacing to make the sides even
+            screen[index++] = ' '; // Spacing to make the sides even
         }
-        os << "#\n"; // Second line
+
+        screen[index++] = '#'; screen[index++] = '\n'; // Right line
     }
 
-    os << "# "; // Bottom line
+    screen[index++] = '#'; screen[index++] = ' '; // Bottom line
     for (int x = 0; x < _dimensions.x; x++) {
-        os << "# ";
+        screen[index++] = '#';
+        screen[index++] = ' ';
     }
-    os << "#\n";
+    screen[index++] = '#'; screen[index++] = '\n'; // Bottom line end
 
-    os << "Press w/a/s/d to move: "; // Moving keys hint
+    screen[index++] = 'P'; screen[index++] = 'r'; screen[index++] = 'e'; screen[index++] = 's'; screen[index++] = 's'; screen[index++] = ' ';
+    screen[index++] = 'w'; screen[index++] = '/'; screen[index++] = 'a'; screen[index++] = '/'; screen[index++] = 's'; screen[index++] = '/';
+    screen[index++] = 'd'; screen[index++] = ' '; screen[index++] = 't'; screen[index++] = 'o'; screen[index++] = ' '; screen[index++] = 'm';
+    screen[index++] = 'o'; screen[index++] = 'v'; screen[index++] = 'e'; screen[index++] = ':'; screen[index++] = ' '; // Move keys hint ("Press w/a/s/d to move: ")
 
-    return os;
+    WriteConsoleOutputCharacter(console, TEXT(screen), buf.dwSize.X * buf.dwSize.Y, {0,1}, NULL);
 }
 
 void SnakeGame::catchUp()

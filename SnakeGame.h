@@ -1,8 +1,9 @@
 #ifndef __SNAKEGAME_H__
 #define __SNAKEGAME_H__
-#include <iostream> // Used for I/O interface
 #include <conio.h> // Used for getch function
 #include <chrono> // Used for interval/Seed generation
+#include <windows.h> // Used for direct printing
+#include <iostream> // Used for printing of long text with numbers
 
 class SnakeGame 
 { // Game class
@@ -40,8 +41,7 @@ public: // Methods/Constructor/Destructor
     SnakeGame();
     ~SnakeGame() = default;
 
-    std::ostream &draw(std::ostream &os = std::cout) const;
-    friend std::ostream &operator<<(std::ostream &os, const SnakeGame &SG); // draw operator
+    void draw(const HANDLE &console) const;
 
     void logic();
     void operator()(); // logic operator
