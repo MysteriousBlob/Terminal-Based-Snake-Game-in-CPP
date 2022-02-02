@@ -20,10 +20,11 @@ SnakeGame::SnakeGame() // Constructs a SnakeGame obj
 
 void SnakeGame::draw(const HANDLE &console) const
 {
+    DWORD written{};
     CONSOLE_SCREEN_BUFFER_INFO buf;
     GetConsoleScreenBufferInfo(console, &buf); // Save the buffer info in a var named buf
 
-    WriteConsoleOutputCharacter(console, TEXT(""), buf.dwSize.X * buf.dwSize.Y, {0,0}, NULL); // Clear terminal
+    WriteConsoleOutputCharacter(console, TEXT(""), buf.dwSize.X * buf.dwSize.Y, {0,0}, &written); // Clear terminal
 
     char screen[buf.dwSize.X * buf.dwSize.Y + 1]; // Declare a string that will represent the screen
     unsigned index {0}; // Indexing for the screen
@@ -51,8 +52,6 @@ void SnakeGame::draw(const HANDLE &console) const
     # # # # # # #
 */
 
-    std::cout << "score: " << snake.tailSize; // Score at the top
-
     screen[index++] = '#'; screen[index++] = ' '; //Top line start
 
     for (int x = 0; x < _dimensions.x; x++)
@@ -61,7 +60,9 @@ void SnakeGame::draw(const HANDLE &console) const
         screen[index++] = ' ';
     }
 
-    screen[index++] = '#'; screen[index++] = '\n'; //Top line end
+    screen[index++] = '#'; //Top line end
+    while(index % buf.dwSize.X != 0)
+        screen[index++] = ' '; // New line
 
 
     for (int y = 0; y < _dimensions.y; y++) // Loop through Y positions
@@ -97,7 +98,9 @@ void SnakeGame::draw(const HANDLE &console) const
             screen[index++] = ' '; // Spacing to make the sides even
         }
 
-        screen[index++] = '#'; screen[index++] = '\n'; // Right line
+        screen[index++] = '#'; // Right line
+        while(index % buf.dwSize.X != 0)
+            screen[index++] = ' '; // New line
     }
 
     screen[index++] = '#'; screen[index++] = ' '; // Bottom line
@@ -105,14 +108,17 @@ void SnakeGame::draw(const HANDLE &console) const
         screen[index++] = '#';
         screen[index++] = ' ';
     }
-    screen[index++] = '#'; screen[index++] = '\n'; // Bottom line end
+    screen[index++] = '#'; // Bottom line end
+    
+    while(index % buf.dwSize.X != 0)
+        screen[index++] = ' '; // New line
 
     screen[index++] = 'P'; screen[index++] = 'r'; screen[index++] = 'e'; screen[index++] = 's'; screen[index++] = 's'; screen[index++] = ' ';
     screen[index++] = 'w'; screen[index++] = '/'; screen[index++] = 'a'; screen[index++] = '/'; screen[index++] = 's'; screen[index++] = '/';
     screen[index++] = 'd'; screen[index++] = ' '; screen[index++] = 't'; screen[index++] = 'o'; screen[index++] = ' '; screen[index++] = 'm';
     screen[index++] = 'o'; screen[index++] = 'v'; screen[index++] = 'e'; screen[index++] = ':'; screen[index++] = ' '; // Move keys hint ("Press w/a/s/d to move: ")
 
-    WriteConsoleOutputCharacter(console, TEXT(screen), buf.dwSize.X * buf.dwSize.Y, {0,1}, NULL);
+    WriteConsoleOutputCharacter(console, TEXT(screen), buf.dwSize.X * buf.dwSize.Y, {0,1}, &written);
 }
 
 void SnakeGame::catchUp()
