@@ -20,14 +20,15 @@ SnakeGame::SnakeGame() // Constructs a SnakeGame obj
 
 void SnakeGame::draw(const HANDLE &console) const
 {
-    DWORD written{};
     CONSOLE_SCREEN_BUFFER_INFO buf;
     GetConsoleScreenBufferInfo(console, &buf); // Save the buffer info in a var named buf
+    SetConsoleCursorPosition(console, {0,0});
 
-    WriteConsoleOutputCharacter(console, TEXT(""), buf.dwSize.X * buf.dwSize.Y, {0,0}, &written); // Clear terminal
-
-    char screen[buf.dwSize.X * buf.dwSize.Y + 1]; // Declare a string that will represent the screen
+    char screen[buf.dwSize.X * buf.dwSize.Y + 1]{}; // Declare a string that will represent the screen
     unsigned index {0}; // Indexing for the screen
+
+    DWORD written{};
+    WriteConsoleOutputCharacter(console, TEXT(screen), buf.dwSize.X * buf.dwSize.Y, {0,0}, &written); // Clear terminal
 
     if(gameOver)
     {
@@ -51,6 +52,8 @@ void SnakeGame::draw(const HANDLE &console) const
     #           #
     # # # # # # #
 */
+
+    std::cout << "score: " << snake.tailSize; // Print out the score
 
     screen[index++] = '#'; screen[index++] = ' '; //Top line start
 

@@ -1,6 +1,9 @@
-# Terminal Based Snake Game
+# Terminal Based Snake Game (No-Lag branch)
 
-# <a href = https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP> Inspiration </a>
+<h1 style="color:Red;"><b>Warning, this branch is unstable and does the opposite of what the name says!</b></h1>
+
+
+# [Inspiration for this project](https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP "Created by NevilleBulmer")
 
 To move use WASD: (This is not permanent)
 
