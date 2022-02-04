@@ -1,6 +1,6 @@
 # Terminal Based Snake Game
 
-# <a href = https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP> Inspiration </a>
+# [Inspiration for this project]("https://github.com/NevilleBulmer/Terminal-Based-Snake-Game-In-CPP" "Created by NevilleBulmer")
 
 To move use WASD: (This is not permanent)
 

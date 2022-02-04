@@ -47,63 +47,74 @@ std::ostream &SnakeGame::draw(std::ostream &os) const
     # # # # # # #
 */
 
-    os << "score: " << snake.tailSize << std::endl; // Score at the top
+    os << "score: " << snake.tailSize << "\n"; // Score at the top
 
-    os << "# ";  // The top line
+    char screen[(_dimensions.x + 2) * 2 * (_dimensions.y + 2) + 24] {}; // Screen string removes lag (24 is added to account for movement hit and null at the end)
+    unsigned index{};
+
+    screen[index++] = '#'; screen[index++] = ' ';  // The top line
     for (int x = 0; x < _dimensions.x; x++) {
-        os << "# ";
+        screen[index++] = '#'; screen[index++] = ' ';
     }
-    os << "#\n";
+    screen[index++] = '#'; screen[index++] = '\n';
     
     for (int y = 0; y < _dimensions.y; y++) // Loop through Y positions
     {
-        os << "# "; // First line
+        screen[index++] = '#'; screen[index++] = ' '; // left parallel line
+
         for (int x = 0; x < _dimensions.x; x++) // Loop through X positions
         { 
             if(snake.head.x == x && snake.head.y == y) // Output the snake's head
             {
-                os << "O";
+                screen[index++] = 'O';
             }
             
             else if(fruit.fruitPos.x == x && fruit.fruitPos.y == y) // Output the fruit
             {
-                os << "P";
+                screen[index++] = 'P';
             }
 
             else if(snake.tailSize != 0) 
             { // Removes the unnecessary allocation
                 bool foundTail = false; // Check if tail was found
+
                 for (int i = 0; i < snake.tailSize; i++) 
                 { // Loop through the tails
                     if(snake.tail[i].x == x && snake.tail[i].y == y)
                     { // Output the tail
-                        os << "o";
+                        screen[index++] = 'o';
                         foundTail = true;
                         break;
                     }
                 }
+                
                 if(!foundTail) // If no tail was found
-                    os << " ";
+                    screen[index++] = ' ';
             }
 
             else //If there's no tail yet
             {
-                os << " ";
+                screen[index++] = ' ';
             }
 
-            os << " "; // Spacing to make the sides even
+            screen[index++] = ' '; // Spacing to make the sides even
         }
-        os << "#\n"; // Second line
+
+        screen[index++] = '#'; screen[index++] = '\n'; // Right parallel line
     }
 
-    os << "# "; // Bottom line
+    screen[index++] = '#'; screen[index++] = ' '; // Bottom line
     for (int x = 0; x < _dimensions.x; x++) {
-        os << "# ";
+        screen[index++] = '#'; screen[index++] = ' ';
     }
-    os << "#\n";
+    screen[index++] = '#'; screen[index++] = '\n';
 
-    os << "Press w/a/s/d to move: "; // Moving keys hint
+    screen[index++] = 'P'; screen[index++] = 'r'; screen[index++] = 'e'; screen[index++] = 's'; screen[index++] = 's'; screen[index++] = ' '; screen[index++] = 'w'; 
+    screen[index++] = '/'; screen[index++] = 'a'; screen[index++] = '/'; screen[index++] = 's'; screen[index++] = '/'; screen[index++] = 'd'; screen[index++] = ' '; 
+    screen[index++] = 't'; screen[index++] = 'o'; screen[index++] = ' '; screen[index++] = 'm'; screen[index++] = 'o'; screen[index++] = 'v'; screen[index++] = 'e'; 
+    screen[index++] = ':'; screen[index++] = ' '; // "Press w/a/s/d to move: " (movement hint)
 
+    os << screen;
     return os;
 }
 
